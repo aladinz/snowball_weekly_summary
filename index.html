@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Snowball Weekly Summary</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<!-- Loading Overlay -->
+<div id="loading" class="loading-overlay">
+  <div class="spinner"></div>
+  <div class="loading-text">Loading your portfolio data…</div>
+</div>
+
+<!-- Toast Container -->
+<div id="toast-container" class="toast-container"></div>
+
+<!-- Add Report Modal -->
+<div id="modal-overlay" class="modal-overlay">
+  <div class="modal">
+    <div class="modal-title">
+      📥 Add Weekly Report
+      <button id="modal-close" class="modal-close" aria-label="Close">&times;</button>
+    </div>
+
+    <form id="form-add-report" autocomplete="off">
+
+      <div style="margin-bottom:16px">
+        <label style="display:block;font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:6px">
+          Week Ending Date <span style="color:var(--red)">*</span>
+        </label>
+        <input type="date" name="report-date" required
+          style="width:100%;padding:8px 12px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-primary);font-size:13px;outline:none;"/>
+      </div>
+
+      <div style="margin-bottom:16px">
+        <label style="display:block;font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:6px">
+          Display Label <span style="color:var(--red)">*</span>
+        </label>
+        <input type="text" name="report-label" placeholder="e.g. March 7, 2026" required
+          style="width:100%;padding:8px 12px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-primary);font-size:13px;outline:none;"/>
+      </div>
+
+      <div style="margin-bottom:20px">
+        <label style="display:block;font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:6px">
+          Portfolios JSON <span style="font-weight:400;color:var(--text-muted)">(optional – paste portfolio array)</span>
+        </label>
+        <textarea name="report-json" rows="7" placeholder='[ { "name": "Rollover IRA", "value": 235000, "pnl_amount": 500, "pnl_percent": 0.21, "pnl_direction": "up", "dividends_next_week": 65, "top_gainers": [], "top_losers": [] } ]'
+          style="width:100%;padding:8px 12px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-primary);font-size:12px;font-family:monospace;resize:vertical;outline:none;line-height:1.5;"></textarea>
+      </div>
+
+      <div style="display:flex;gap:10px;justify-content:flex-end">
+        <button type="button" class="btn btn-ghost" id="modal-cancel-btn" onclick="document.getElementById('modal-overlay').classList.remove('open')">Cancel</button>
+        <button type="submit" class="btn btn-primary">💾 Save Report</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     MAIN CONTENT
+════════════════════════════════════════════ -->
+<div class="app-wrapper">
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="logo">
+      <div class="logo-icon">📈</div>
+      <div class="logo-text">
+        <h1>Snowball Weekly Summary</h1>
+        <span>Portfolio Performance Dashboard</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="week-label">Week Ending: <span id="week-label-text">—</span></div>
+      <button class="btn btn-ghost" id="btn-export" title="Export all reports as JSON">⬇ Export</button>
+      <button class="btn btn-primary" id="btn-add-report">＋ Add Report</button>
+    </div>
+  </header>
+
+  <!-- ── Markets Overview ─────────────────── -->
+  <section aria-label="Markets Overview">
+    <div class="section-header">
+      <span class="section-icon">📈</span>
+      <span class="section-title">Markets Overview</span>
+    </div>
+    <div id="markets-grid" class="markets-grid"></div>
+  </section>
+
+  <!-- ── Portfolio Summary ────────────────── -->
+  <section aria-label="Portfolio Summary">
+    <div class="section-header">
+      <span class="section-icon">💰</span>
+      <span class="section-title">Portfolio Summary</span>
+      <span class="section-badge">Week at a Glance</span>
+    </div>
+    <div id="summary-bar" class="summary-bar"></div>
+  </section>
+
+  <!-- ── Charts ──────────────────────────── -->
+  <section aria-label="Charts">
+    <div class="section-header">
+      <span class="section-icon">📊</span>
+      <span class="section-title">Visualizations</span>
+    </div>
+    <div class="charts-grid">
+      <div class="chart-card">
+        <h3>Portfolio Allocation</h3>
+        <div id="donut-chart"></div>
+      </div>
+      <div class="chart-card">
+        <h3>Weekly P&amp;L by Portfolio</h3>
+        <div id="pnl-chart"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Portfolio Cards ──────────────────── -->
+  <section aria-label="Portfolio Details">
+    <div class="section-header">
+      <span class="section-icon">💼</span>
+      <span class="section-title">Portfolio Details</span>
+    </div>
+    <div id="portfolios-grid" class="portfolios-grid"></div>
+  </section>
+
+  <!-- ── Dividend Calendar ────────────────── -->
+  <section aria-label="Upcoming Dividends">
+    <div class="dividend-calendar">
+      <div class="calendar-header">
+        <div class="section-header" style="margin-bottom:0">
+          <span class="section-icon">📅</span>
+          <span class="section-title" style="color:var(--gold)">Next Week — Dividend Calendar</span>
+        </div>
+        <div style="font-size:13px;color:var(--text-secondary)">
+          Total: <strong id="div-total-badge" style="color:var(--gold)">—</strong>
+        </div>
+      </div>
+      <div id="calendar-body"></div>
+    </div>
+  </section>
+
+  <!-- ── Report History ───────────────────── -->
+  <section aria-label="Report History">
+    <div class="history-section">
+      <div class="history-header">
+        <div class="section-header" style="margin-bottom:0">
+          <span class="section-icon">🗂</span>
+          <span class="section-title">Report History</span>
+        </div>
+        <span style="font-size:12px;color:var(--text-muted)">Click a row to view that week</span>
+      </div>
+      <div id="history-list" class="history-list"></div>
+    </div>
+  </section>
+
+</div><!-- /app-wrapper -->
+
+<script src="js/app.js"></script>
+</body>
+</html>
