@@ -1,6 +1,110 @@
 {
   "reports": [
     {
+      "id": "2026-03-07",
+      "week_ending": "March 7, 2026",
+      "created_at": "2026-03-07",
+      "markets": [
+        { "name": "S&P 500",                      "ticker": "SPX",  "change": -2.02, "direction": "down" },
+        { "name": "NASDAQ Composite",             "ticker": "COMP", "change": -1.24, "direction": "down" },
+        { "name": "Dow Jones Industrial Average", "ticker": "DJIA", "change": -3.01, "direction": "down" },
+        { "name": "Bitcoin",                      "ticker": "BTC",  "change":  3.42, "direction": "up"   }
+      ],
+      "portfolios": [
+        {
+          "name": "Rollover IRA",
+          "value": 228730.90,
+          "pnl_amount": -3324.39,
+          "pnl_percent": -1.43,
+          "pnl_direction": "down",
+          "dividends_next_week": 63.68,
+          "top_gainers": [
+            { "ticker": "PDBC", "name": "Invesco Optimum Yield Diversified Commodity Strategy No K-1 ETF", "change_amount": 1632.28, "change_percent": 9.79 },
+            { "ticker": "VTIP", "name": "Vanguard Short-Term Inflation-Protected Securities Index Fund ETF Shares", "change_amount": 46.26, "change_percent": 0.18 }
+          ],
+          "top_losers": [
+            { "ticker": "VXUS",  "name": "Vanguard Total International Stock Index Fund ETF Shares", "change_amount": -1474.99, "change_percent": -6.96 },
+            { "ticker": "XLV",   "name": "Health Care Select Sector SPDR Fund",                     "change_amount":  -967.50, "change_percent": -4.68 },
+            { "ticker": "VTI",   "name": "Vanguard Total Stock Market Index Fund ETF Shares",        "change_amount": -1478.91, "change_percent": -2.17 },
+            { "ticker": "SCHD",  "name": "Schwab U.S. Dividend Equity ETF",                         "change_amount":  -560.64, "change_percent": -2.01 },
+            { "ticker": "BNDW",  "name": "Vanguard Total World Bond ETF",                           "change_amount":  -354.60, "change_percent": -1.41 }
+          ]
+        },
+        {
+          "name": "Roth IRA",
+          "value": 213959.94,
+          "pnl_amount": -7610.51,
+          "pnl_percent": -3.43,
+          "pnl_direction": "down",
+          "dividends_next_week": 44.00,
+          "top_gainers": [],
+          "top_losers": [
+            { "ticker": "VXUS",  "name": "Vanguard Total International Stock Index Fund ETF Shares", "change_amount": -1836.45, "change_percent": -6.96 },
+            { "ticker": "SMH",   "name": "VanEck Vectors Semiconductor ETF",                        "change_amount": -1371.47, "change_percent": -6.35 },
+            { "ticker": "VRT",   "name": "Vertiv Holdings Co",                                      "change_amount":  -354.48, "change_percent": -5.14 },
+            { "ticker": "XLV",   "name": "Health Care Select Sector SPDR Fund",                     "change_amount": -1245.00, "change_percent": -4.68 },
+            { "ticker": "FZROX", "name": "Fidelity ZERO Total Market Index Fund",                   "change_amount": -1937.21, "change_percent": -2.18 }
+          ]
+        },
+        {
+          "name": "Investment",
+          "value": 144594.25,
+          "pnl_amount": -2311.66,
+          "pnl_percent": -1.57,
+          "pnl_direction": "down",
+          "dividends_next_week": 189.58,
+          "top_gainers": [],
+          "top_losers": [
+            { "ticker": "VXUS", "name": "Vanguard Total International Stock Index Fund ETF Shares", "change_amount": -1096.04, "change_percent": -6.96 },
+            { "ticker": "VTI",  "name": "Vanguard Total Stock Market Index Fund ETF Shares",        "change_amount":  -942.08, "change_percent": -2.17 },
+            { "ticker": "SCHD", "name": "Schwab U.S. Dividend Equity ETF",                         "change_amount":  -330.88, "change_percent": -2.01 },
+            { "ticker": "SGOV", "name": "iShares Trust - iShares 0-3 Month Treasury Bond ETF",     "change_amount":  -132.24, "change_percent": -0.19 }
+          ]
+        },
+        {
+          "name": "Traditional IRA",
+          "value": 688182.09,
+          "pnl_amount": -5056.05,
+          "pnl_percent": -0.73,
+          "pnl_direction": "down",
+          "dividends_next_week": 1133.13,
+          "top_gainers": [
+            { "ticker": "VTIP", "name": "Vanguard Short-Term Inflation-Protected Securities Index Fund ETF Shares", "change_amount": 186.81, "change_percent": 0.20 }
+          ],
+          "top_losers": [
+            { "ticker": "GLDM", "name": "SPDR Gold MiniShares",                                     "change_amount": -2112.19, "change_percent": -2.19 },
+            { "ticker": "SCHD", "name": "Schwab U.S. Dividend Equity ETF",                         "change_amount": -2000.64, "change_percent": -2.08 },
+            { "ticker": "USMV", "name": "iShares MSCI USA Min Vol Factor ETF",                     "change_amount":  -739.94, "change_percent": -1.17 },
+            { "ticker": "VGSH", "name": "Vanguard Short-Term Treasury Index Fund ETF Shares",      "change_amount":  -960.04, "change_percent": -0.44 },
+            { "ticker": "SGOV", "name": "iShares Trust - iShares 0-3 Month Treasury Bond ETF",     "change_amount":  -207.47, "change_percent": -0.19 }
+          ]
+        },
+        {
+          "name": "Income Strategy Test",
+          "value": 15108.36,
+          "pnl_amount": -136.05,
+          "pnl_percent": -0.89,
+          "pnl_direction": "down",
+          "dividends_next_week": 51.44,
+          "top_gainers": [],
+          "top_losers": [
+            { "ticker": "JEPI", "name": "JPMorgan Equity Premium Income ETF",                   "change_amount": -138.08, "change_percent": -2.99 },
+            { "ticker": "SCHD", "name": "Schwab U.S. Dividend Equity ETF",                      "change_amount":  -32.26, "change_percent": -2.01 },
+            { "ticker": "BIL",  "name": "SPDR Bloomberg Barclays 1-3 Month T-Bill ETF",         "change_amount":   -2.95, "change_percent": -0.20 },
+            { "ticker": "SGOV", "name": "iShares Trust - iShares 0-3 Month Treasury Bond ETF",  "change_amount":  -14.20, "change_percent": -0.19 }
+          ]
+        }
+      ],
+      "upcoming_dividends": [
+        { "date": "2026-03-04", "display_date": "Mar 04", "ticker": "BNDW", "name": "Vanguard Total World Bond ETF",                                   "event_type": "Payment date", "frequency": "monthly", "amount_per_share": 0.1769  },
+        { "date": "2026-03-04", "display_date": "Mar 04", "ticker": "JEPI", "name": "JPMorgan Equity Premium Income ETF",                              "event_type": "Payment date", "frequency": "monthly", "amount_per_share": 0.35134 },
+        { "date": "2026-03-04", "display_date": "Mar 04", "ticker": "VGIT", "name": "Vanguard Intermediate-Term Treasury Index Fund ETF Shares",       "event_type": "Payment date", "frequency": "monthly", "amount_per_share": 0.1746  },
+        { "date": "2026-03-04", "display_date": "Mar 04", "ticker": "VGSH", "name": "Vanguard Short-Term Treasury Index Fund ETF Shares",              "event_type": "Payment date", "frequency": "monthly", "amount_per_share": 0.17    },
+        { "date": "2026-03-05", "display_date": "Mar 05", "ticker": "BIL",  "name": "SPDR Bloomberg Barclays 1-3 Month T-Bill ETF",                    "event_type": "Payment date", "frequency": "monthly", "amount_per_share": 0.24311 },
+        { "date": "2026-03-05", "display_date": "Mar 05", "ticker": "SGOV", "name": "iShares Trust - iShares 0-3 Month Treasury Bond ETF",             "event_type": "Payment date", "frequency": "monthly", "amount_per_share": 0.2724  }
+      ]
+    },
+    {
       "id": "2026-02-28",
       "week_ending": "February 28, 2026",
       "created_at": "2026-02-28",

@@ -49,16 +49,15 @@ class ReportsDB {
   }
 
   async init(jsonPath) {
-    /* Merge bundled data/db.json with localStorage */
+    /* Always merge bundled data/db.json — file entries overwrite localStorage copies */
     try {
-      const resp = await fetch(jsonPath);
+      const resp = await fetch(jsonPath + '?v=' + Date.now()); // bust cache
       if (!resp.ok) throw new Error('fetch failed');
       const bundled = await resp.json();
-      const existing = new Set(this.data.reports.map(r => r.id));
       for (const r of bundled.reports) {
-        if (!existing.has(r.id)) {
-          this.data.reports.push(r);
-        }
+        const idx = this.data.reports.findIndex(x => x.id === r.id);
+        if (idx >= 0) this.data.reports.splice(idx, 1, r); // overwrite
+        else this.data.reports.push(r);                    // new entry
       }
       this._save();
     } catch (e) {
@@ -243,7 +242,6 @@ function renderPortfolioCard(p) {
       </div>
       <div class="dividend-badge">
         <div class="dividend-badge-label">Dividends</div>
-        <div class="dividend-badge-label" style="font-size:9px">Next Week</div>
         <div class="dividend-badge-value">${fmt.currency(p.dividends_next_week)}</div>
       </div>
     </div>
