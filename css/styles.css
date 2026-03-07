@@ -940,3 +940,40 @@ a:hover { text-decoration: underline; }
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+/* ── Large Modal & Form Styles ── */
+.large-modal {
+  max-width: 800px;
+  max-height: 92vh;
+}
+
+.modal-section {
+  margin-bottom: 22px;
+}
+
+.modal-section-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-field-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 5px;
+}
+
+.pf-form-header:hover { background: var(--bg-card-hover) !important; }
+.pf-form-header:hover .pf-toggle { color: var(--blue); }
+
+.holding-input-row input:focus,
+.dividend-input-row input:focus,
+.dividend-input-row select:focus {
+  border-color: var(--blue) !important;
+}

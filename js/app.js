@@ -4,6 +4,21 @@
 
 const DB_KEY = 'snowball_db';
 
+const PORTFOLIO_NAMES = [
+  'Rollover IRA', 'Roth IRA', 'Investment', 'Traditional IRA', 'Income Strategy Test'
+];
+
+const MARKET_DEFS = [
+  { name: 'S&P 500',                      ticker: 'SPX'  },
+  { name: 'NASDAQ Composite',             ticker: 'COMP' },
+  { name: 'Dow Jones Industrial Average', ticker: 'DJIA' },
+  { name: 'Bitcoin',                      ticker: 'BTC'  }
+];
+
+function slugify(s) {
+  return s.toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, '');
+}
+
 // ── Helpers ─────────────────────────────────
 
 const fmt = {
@@ -61,6 +76,11 @@ class ReportsDB {
     if (idx >= 0) this.data.reports.splice(idx, 1, report);
     else this.data.reports.unshift(report);
     this.data.reports.sort((a, b) => b.id.localeCompare(a.id));
+    this._save();
+  }
+
+  delete(id) {
+    this.data.reports = this.data.reports.filter(r => r.id !== id);
     this._save();
   }
 }
@@ -281,6 +301,8 @@ function renderHistory(reports, activeId) {
       <div class="history-total">${fmt.currency(total)}</div>
       <div class="history-pnl ${pnlCls}">${arrow}${fmt.currency(Math.abs(pnl))}</div>
       <div class="history-portfolios">${badges}</div>
+      <button class="btn-delete-report" data-id="${r.id}" title="Delete this report"
+        style="margin-left:8px;flex-shrink:0;background:none;border:1px solid rgba(248,81,73,0.3);border-radius:4px;color:var(--red);cursor:pointer;font-size:11px;padding:2px 8px">✕ Delete</button>
     </div>`;
   }).join('');
 }
@@ -341,9 +363,10 @@ class App {
     document.getElementById('history-list').innerHTML =
       renderHistory(this.db.all(), this.currentId);
 
-    // re-attach click
+    // Load report on row click
     document.querySelectorAll('.history-item').forEach(el => {
-      el.addEventListener('click', () => {
+      el.addEventListener('click', e => {
+        if (e.target.closest('.btn-delete-report')) return;
         const id = el.dataset.id;
         const report = this.db.get(id);
         if (report) {
@@ -354,6 +377,24 @@ class App {
           window.scrollTo({ top: 0, behavior: 'smooth' });
           this._toast('Loaded report: ' + report.week_ending, 'info');
         }
+      });
+    });
+
+    // Delete report buttons
+    document.querySelectorAll('.btn-delete-report').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        const id = btn.dataset.id;
+        const report = this.db.get(id);
+        if (!report) return;
+        if (!confirm(`Delete report "${report.week_ending}"?\nThis cannot be undone.`)) return;
+        this.db.delete(id);
+        if (id === this.currentId) {
+          const latest = this.db.latest();
+          if (latest) { this.currentId = latest.id; this._render(latest); }
+        }
+        this._renderHistory();
+        this._toast('Report deleted.', 'info');
       });
     });
   }
@@ -377,8 +418,8 @@ class App {
   }
 
   _openModal() {
-    const overlay = document.getElementById('modal-overlay');
-    overlay.classList.add('open');
+    this._buildModalContent();
+    document.getElementById('modal-overlay').classList.add('open');
   }
 
   _closeModal() {
@@ -386,20 +427,10 @@ class App {
   }
 
   _attachEvents() {
-    // Modal open
     document.getElementById('btn-add-report').addEventListener('click', () => this._openModal());
-    document.getElementById('modal-close').addEventListener('click', () => this._closeModal());
     document.getElementById('modal-overlay').addEventListener('click', e => {
       if (e.target === e.currentTarget) this._closeModal();
     });
-
-    // Form submit
-    document.getElementById('form-add-report').addEventListener('submit', e => {
-      e.preventDefault();
-      this._submitReport(e.target);
-    });
-
-    // Export button
     document.getElementById('btn-export').addEventListener('click', () => {
       const blob = new Blob([JSON.stringify({ reports: this.db.all() }, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
@@ -412,35 +443,267 @@ class App {
     });
   }
 
-  _submitReport(form) {
-    const date       = form.elements['report-date'].value;
-    const label      = form.elements['report-label'].value.trim();
-    const jsonInput  = form.elements['report-json'].value.trim();
+  // ── Modal Form Builder ────────────────────
 
-    if (!date || !label) {
-      this._toast('Please fill in all required fields.', 'error');
-      return;
-    }
+  _buildModalContent() {
+    const F = `style="width:100%;padding:7px 10px;background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-primary);font-size:12px;outline:none;"`;
+    const S = `style="padding:7px 10px;background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-primary);font-size:12px;outline:none;cursor:pointer;width:100%"`;
 
-    let portfolios = [];
-    if (jsonInput) {
-      try { portfolios = JSON.parse(jsonInput); }
-      catch { this._toast('Invalid JSON for portfolios.', 'error'); return; }
-    }
+    const marketRows = MARKET_DEFS.map(m => `
+      <div style="display:grid;grid-template-columns:1fr 110px 90px;gap:8px;align-items:center;margin-bottom:8px">
+        <span style="font-size:13px;color:var(--text-secondary)">${m.name}</span>
+        <input type="number" step="0.01" min="0" name="mkt_${m.ticker}_change" placeholder="e.g. 0.44" ${F} />
+        <select name="mkt_${m.ticker}_dir" ${S}>
+          <option value="down">▼ Down</option>
+          <option value="up">▲ Up</option>
+        </select>
+      </div>`).join('');
 
-    const report = {
-      id: date,
-      week_ending: label,
-      created_at: date,
-      markets: [],
-      portfolios,
-      upcoming_dividends: []
-    };
+    const portfolioSections = PORTFOLIO_NAMES.map(name => {
+      const s = slugify(name);
+      return `
+        <div style="margin-bottom:10px">
+          <div class="pf-form-header" data-slug="${s}"
+            style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;
+                   background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius-sm);
+                   cursor:pointer;user-select:none">
+            <span style="font-size:13px;font-weight:600">${name}</span>
+            <span class="pf-toggle" style="font-size:11px;color:var(--text-muted)">▼ expand</span>
+          </div>
+          <div class="pf-form-body" id="pfbody_${s}"
+            style="display:none;padding:14px;border:1px solid var(--border);border-top:none;
+                   border-radius:0 0 var(--radius-sm) var(--radius-sm);background:var(--bg-card)">
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:14px">
+              <div><div class="modal-field-label">Value ($)</div><input type="number" step="0.01" name="p_${s}_value" placeholder="231970.87" ${F}/></div>
+              <div><div class="modal-field-label">P&amp;L ($)</div><input type="number" step="0.01" name="p_${s}_pnl_amount" placeholder="176.38" ${F}/></div>
+              <div><div class="modal-field-label">P&amp;L (%)</div><input type="number" step="0.001" name="p_${s}_pnl_percent" placeholder="0.08" ${F}/></div>
+              <div><div class="modal-field-label">Direction</div><select name="p_${s}_pnl_dir" ${S}><option value="up">▲ Up</option><option value="down">▼ Down</option></select></div>
+              <div><div class="modal-field-label">Dividends ($)</div><input type="number" step="0.01" name="p_${s}_dividends" placeholder="61.81" ${F}/></div>
+            </div>
+            <div style="margin-bottom:12px">
+              <div style="font-size:11px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px">🥇 Top Gainers</div>
+              <div style="display:grid;grid-template-columns:75px 1fr 85px 75px;gap:5px;margin-bottom:4px">
+                <span style="font-size:10px;color:var(--text-muted);font-weight:600">TICKER</span>
+                <span style="font-size:10px;color:var(--text-muted);font-weight:600">Name</span>
+                <span style="font-size:10px;color:var(--text-muted);font-weight:600">$ Change</span>
+                <span style="font-size:10px;color:var(--text-muted);font-weight:600">% Change</span>
+              </div>
+              <div id="gainers_${s}"></div>
+              <button type="button" class="btn-add-holding btn btn-ghost" data-target="gainers_${s}" style="font-size:11px;padding:4px 10px;margin-top:6px">＋ Add Gainer</button>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px">📉 Top Losers</div>
+              <div style="display:grid;grid-template-columns:75px 1fr 85px 75px;gap:5px;margin-bottom:4px">
+                <span style="font-size:10px;color:var(--text-muted);font-weight:600">TICKER</span>
+                <span style="font-size:10px;color:var(--text-muted);font-weight:600">Name</span>
+                <span style="font-size:10px;color:var(--text-muted);font-weight:600">$ Change</span>
+                <span style="font-size:10px;color:var(--text-muted);font-weight:600">% Change</span>
+              </div>
+              <div id="losers_${s}"></div>
+              <button type="button" class="btn-add-holding btn btn-ghost" data-target="losers_${s}" style="font-size:11px;padding:4px 10px;margin-top:6px">＋ Add Loser</button>
+            </div>
+          </div>
+        </div>`;
+    }).join('');
 
+    document.getElementById('modal-form-container').innerHTML = `
+      <div class="modal-title">
+        📥 Add Weekly Report
+        <button type="button" id="modal-close" class="modal-close" aria-label="Close">&times;</button>
+      </div>
+      <form id="form-add-report" autocomplete="off">
+
+        <div class="modal-section">
+          <div class="modal-section-title">📋 Report Info</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div>
+              <div class="modal-field-label">Week Ending Date <span style="color:var(--red)">*</span></div>
+              <input type="date" name="report-date" required ${F} />
+            </div>
+            <div>
+              <div class="modal-field-label">Display Label <span style="color:var(--red)">*</span></div>
+              <input type="text" name="report-label" placeholder="e.g. March 7, 2026" required ${F} />
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title">📈 Markets Overview</div>
+          <div style="background:var(--bg-secondary);padding:12px;border-radius:var(--radius-sm);border:1px solid var(--border)">
+            <div style="display:grid;grid-template-columns:1fr 110px 90px;gap:8px;margin-bottom:6px">
+              <span style="font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase">Market</span>
+              <span style="font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase">Change %</span>
+              <span style="font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase">Dir.</span>
+            </div>
+            ${marketRows}
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title">💼 Portfolios <span style="font-size:11px;color:var(--text-muted);font-weight:400">(click each to expand)</span></div>
+          ${portfolioSections}
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title">📅 Upcoming Dividends</div>
+          <div style="display:grid;grid-template-columns:105px 65px 1fr 130px 80px 28px;gap:6px;margin-bottom:5px">
+            <span style="font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase">Date</span>
+            <span style="font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase">Ticker</span>
+            <span style="font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase">Fund Name</span>
+            <span style="font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase">Event Type</span>
+            <span style="font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase">$/Share</span>
+            <span></span>
+          </div>
+          <div id="dividends-rows"></div>
+          <button type="button" class="btn-add-dividend btn btn-ghost" style="font-size:11px;padding:4px 10px;margin-top:6px">＋ Add Dividend Event</button>
+        </div>
+
+        <div style="display:flex;gap:10px;justify-content:flex-end;padding-top:16px;border-top:1px solid var(--border);margin-top:4px">
+          <button type="button" id="modal-cancel-btn" class="btn btn-ghost">Cancel</button>
+          <button type="submit" class="btn btn-primary">💾 Save Report</button>
+        </div>
+      </form>`;
+
+    this._attachModalFormEvents();
+  }
+
+  _attachModalFormEvents() {
+    document.getElementById('modal-close')?.addEventListener('click', () => this._closeModal());
+    document.getElementById('modal-cancel-btn')?.addEventListener('click', () => this._closeModal());
+    document.getElementById('form-add-report')?.addEventListener('submit', e => {
+      e.preventDefault();
+      this._submitReport();
+    });
+
+    // Portfolio section expand/collapse
+    document.querySelectorAll('.pf-form-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const s    = header.dataset.slug;
+        const body = document.getElementById(`pfbody_${s}`);
+        const lbl  = header.querySelector('.pf-toggle');
+        const open = body.style.display === 'none';
+        body.style.display = open ? 'block' : 'none';
+        lbl.textContent    = open ? '▲ collapse' : '▼ expand';
+      });
+    });
+
+    // Add holding row
+    document.querySelectorAll('.btn-add-holding').forEach(btn => {
+      btn.addEventListener('click', () => this._addHoldingRow(btn.dataset.target));
+    });
+
+    // Add dividend row
+    document.querySelector('.btn-add-dividend')?.addEventListener('click', () => this._addDividendRow());
+  }
+
+  _addHoldingRow(containerId) {
+    const c = document.getElementById(containerId);
+    if (!c) return;
+    const iS = 'style="padding:6px 8px;background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-primary);font-size:12px;outline:none;width:100%"';
+    const row = document.createElement('div');
+    row.className = 'holding-input-row';
+    row.style.cssText = 'display:grid;grid-template-columns:75px 1fr 85px 75px 26px;gap:5px;align-items:center;margin-bottom:5px';
+    row.innerHTML = `
+      <input type="text" class="h-ticker" placeholder="TICKER" ${iS} />
+      <input type="text" class="h-name"   placeholder="Fund / Holding Name" ${iS} />
+      <input type="number" step="0.01" class="h-amount" placeholder="123.45" ${iS} />
+      <input type="number" step="0.01" class="h-pct"    placeholder="1.23" ${iS} />
+      <button type="button" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:18px;padding:0;line-height:1">×</button>`;
+    row.querySelector('button').addEventListener('click', () => row.remove());
+    c.appendChild(row);
+  }
+
+  _addDividendRow() {
+    const c = document.getElementById('dividends-rows');
+    if (!c) return;
+    const iS = 'style="padding:6px 8px;background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-primary);font-size:12px;outline:none;width:100%"';
+    const row = document.createElement('div');
+    row.className = 'dividend-input-row';
+    row.style.cssText = 'display:grid;grid-template-columns:105px 65px 1fr 130px 80px 28px;gap:6px;align-items:center;margin-bottom:5px';
+    row.innerHTML = `
+      <input type="date" class="div-date" ${iS} />
+      <input type="text" class="div-ticker" placeholder="SGOV" ${iS} />
+      <input type="text" class="div-name"   placeholder="Fund Name" ${iS} />
+      <select class="div-type" ${iS} style="cursor:pointer">
+        <option value="Ex-dividend date">Ex-dividend date</option>
+        <option value="Payment date">Payment date</option>
+      </select>
+      <input type="number" step="0.00001" class="div-amount" placeholder="0.30924" ${iS} />
+      <button type="button" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:18px;padding:0;line-height:1">×</button>`;
+    row.querySelector('button').addEventListener('click', () => row.remove());
+    c.appendChild(row);
+  }
+
+  _submitReport() {
+    const form = document.getElementById('form-add-report');
+    if (!form) return;
+
+    const date  = form.elements['report-date']?.value;
+    const label = form.elements['report-label']?.value?.trim();
+    if (!date || !label) { this._toast('Date and label are required.', 'error'); return; }
+
+    // Markets
+    const markets = MARKET_DEFS.map(m => {
+      const change = parseFloat(form.elements[`mkt_${m.ticker}_change`]?.value) || 0;
+      const dir    = form.elements[`mkt_${m.ticker}_dir`]?.value || 'down';
+      return { name: m.name, ticker: m.ticker, change: dir === 'down' ? -change : change, direction: dir };
+    });
+
+    // Portfolios
+    const portfolios = PORTFOLIO_NAMES.map(name => {
+      const s         = slugify(name);
+      const value     = parseFloat(form.elements[`p_${s}_value`]?.value)       || 0;
+      const pnl_amt   = parseFloat(form.elements[`p_${s}_pnl_amount`]?.value)  || 0;
+      const pnl_pct   = parseFloat(form.elements[`p_${s}_pnl_percent`]?.value) || 0;
+      const pnl_dir   = form.elements[`p_${s}_pnl_dir`]?.value || 'up';
+      const dividends = parseFloat(form.elements[`p_${s}_dividends`]?.value)   || 0;
+
+      const parseHoldings = (containerId, isLoss) =>
+        [...(document.getElementById(containerId)?.querySelectorAll('.holding-input-row') || [])].map(row => {
+          const ticker = row.querySelector('.h-ticker')?.value?.trim();
+          if (!ticker) return null;
+          const amt = parseFloat(row.querySelector('.h-amount')?.value) || 0;
+          const pct = parseFloat(row.querySelector('.h-pct')?.value)    || 0;
+          return {
+            ticker,
+            name:           row.querySelector('.h-name')?.value?.trim() || ticker,
+            change_amount:  isLoss ? -Math.abs(amt) : Math.abs(amt),
+            change_percent: isLoss ? -Math.abs(pct) : Math.abs(pct)
+          };
+        }).filter(Boolean);
+
+      return {
+        name, value,
+        pnl_amount:       pnl_amt,
+        pnl_percent:      pnl_pct,
+        pnl_direction:    pnl_dir,
+        dividends_next_week: dividends,
+        top_gainers: parseHoldings(`gainers_${s}`, false),
+        top_losers:  parseHoldings(`losers_${s}`,  true)
+      };
+    });
+
+    // Upcoming dividends
+    const upcoming_dividends = [...document.querySelectorAll('.dividend-input-row')].map(row => {
+      const dateVal = row.querySelector('.div-date')?.value;
+      const ticker  = row.querySelector('.div-ticker')?.value?.trim();
+      if (!dateVal || !ticker) return null;
+      const d = new Date(dateVal + 'T00:00:00');
+      const display_date = d.toLocaleDateString('en-US', { month: 'short', day: '2-digit' });
+      return {
+        date: dateVal, display_date, ticker,
+        name:             row.querySelector('.div-name')?.value?.trim() || ticker,
+        event_type:       row.querySelector('.div-type')?.value || 'Ex-dividend date',
+        frequency:        'monthly',
+        amount_per_share: parseFloat(row.querySelector('.div-amount')?.value) || 0
+      };
+    }).filter(Boolean);
+
+    const report = { id: date, week_ending: label, created_at: date, markets, portfolios, upcoming_dividends };
     this.db.add(report);
-    this._render(this.db.get(date) || this.db.latest());
+    this.currentId = report.id;
+    this._render(report);
     this._closeModal();
-    form.reset();
     this._toast(`Report "${label}" saved!`, 'success');
   }
 }
