@@ -1,6 +1,84 @@
 {
   "reports": [
     {
+      "id": "2025-12-27",
+      "week_ending": "December 27, 2025",
+      "created_at": "2025-12-27",
+      "markets": [
+        { "name": "S&P 500",                      "ticker": "SPX",  "change":  1.40, "direction": "up"   },
+        { "name": "NASDAQ Composite",             "ticker": "COMP", "change":  1.22, "direction": "up"   },
+        { "name": "Dow Jones Industrial Average", "ticker": "DJIA", "change":  1.20, "direction": "up"   },
+        { "name": "Bitcoin",                      "ticker": "BTC",  "change": -1.25, "direction": "down" }
+      ],
+      "portfolios": [
+        {
+          "name": "Rollover IRA",
+          "value": 238124.11,
+          "pnl_amount": 3522.71,
+          "pnl_percent": 1.50,
+          "pnl_direction": "up",
+          "dividends_next_week": 1012.85,
+          "top_gainers": [
+            { "ticker": "VRT",  "name": "Vertiv Holdings Co",                                          "change_amount":  232.80, "change_percent": 4.86 },
+            { "ticker": "AVGO", "name": "Broadcom Inc",                                                "change_amount":  295.09, "change_percent": 3.46 },
+            { "ticker": "AMZN", "name": "Amazon.com, Inc",                                             "change_amount":  103.40, "change_percent": 2.27 },
+            { "ticker": "VXUS", "name": "Vanguard Total International Stock Index Fund ETF Shares",    "change_amount":  472.00, "change_percent": 1.58 },
+            { "ticker": "SCHG", "name": "Schwab U.S. Large-Cap Growth ETF",                           "change_amount":  151.80, "change_percent": 1.41 }
+          ],
+          "top_losers": []
+        },
+        {
+          "name": "Roth IRA",
+          "value": 207200.77,
+          "pnl_amount": 2962.95,
+          "pnl_percent": 1.45,
+          "pnl_direction": "up",
+          "dividends_next_week": 559.75,
+          "top_gainers": [
+            { "ticker": "NVDA", "name": "NVIDIA Corporation",                    "change_amount":  143.14, "change_percent": 5.27 },
+            { "ticker": "VRT",  "name": "Vertiv Holdings Co",                    "change_amount":  388.30, "change_percent": 4.86 },
+            { "ticker": "AVGO", "name": "Broadcom Inc",                          "change_amount":  142.08, "change_percent": 3.46 },
+            { "ticker": "SMH",  "name": "VanEck Vectors Semiconductor ETF",      "change_amount":  434.67, "change_percent": 2.70 },
+            { "ticker": "AMZN", "name": "Amazon.com, Inc",                       "change_amount":  103.40, "change_percent": 2.27 }
+          ],
+          "top_losers": []
+        },
+        {
+          "name": "Investment",
+          "value": 157880.53,
+          "pnl_amount": 1628.41,
+          "pnl_percent": 1.04,
+          "pnl_direction": "up",
+          "dividends_next_week": 602.80,
+          "top_gainers": [
+            { "ticker": "VRT",   "name": "Vertiv Holdings Co",                                         "change_amount":   38.80, "change_percent": 4.86 },
+            { "ticker": "FNDE",  "name": "Schwab Fundamental Emerging Markets Large Company Index ETF", "change_amount":   16.37, "change_percent": 1.80 },
+            { "ticker": "FLCSX", "name": "Fidelity Large Cap Stock Fund",                              "change_amount":  151.79, "change_percent": 1.71 },
+            { "ticker": "VXUS",  "name": "Vanguard Total International Stock Index Fund ETF Shares",   "change_amount":  221.84, "change_percent": 1.58 },
+            { "ticker": "VTI",   "name": "Vanguard Total Stock Market Index Fund ETF Shares",          "change_amount":  441.60, "change_percent": 1.03 }
+          ],
+          "top_losers": []
+        },
+        {
+          "name": "Traditional IRA",
+          "value": 668574.46,
+          "pnl_amount": 3518.84,
+          "pnl_percent": 0.53,
+          "pnl_direction": "up",
+          "dividends_next_week": 1379.20,
+          "top_gainers": [
+            { "ticker": "VRT",  "name": "Vertiv Holdings Co",                                          "change_amount":  100.88, "change_percent": 4.86 },
+            { "ticker": "GLDM", "name": "SPDR Gold MiniShares",                                        "change_amount": 1413.51, "change_percent": 4.44 },
+            { "ticker": "USMV", "name": "iShares MSCI USA Min Vol Factor ETF",                        "change_amount":  210.87, "change_percent": 1.05 },
+            { "ticker": "SCHD", "name": "Schwab U.S. Dividend Equity ETF",                            "change_amount":  199.80, "change_percent": 0.66 },
+            { "ticker": "VGSH", "name": "Vanguard Short-Term Treasury Index Fund ETF Shares",         "change_amount":   47.60, "change_percent": 0.07 }
+          ],
+          "top_losers": []
+        }
+      ],
+      "upcoming_dividends": []
+    },
+    {
       "id": "2025-12-20",
       "week_ending": "December 20, 2025",
       "created_at": "2025-12-20",
