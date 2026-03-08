@@ -1,6 +1,95 @@
 {
   "reports": [
     {
+      "id": "2025-11-29",
+      "week_ending": "November 29, 2025",
+      "created_at": "2025-11-29",
+      "markets": [
+        { "name": "S&P 500",                      "ticker": "SPX",  "change":  3.73, "direction": "up" },
+        { "name": "NASDAQ Composite",             "ticker": "COMP", "change":  4.91, "direction": "up" },
+        { "name": "Dow Jones Industrial Average", "ticker": "DJIA", "change":  3.18, "direction": "up" },
+        { "name": "Bitcoin",                      "ticker": "BTC",  "change":  4.75, "direction": "up" }
+      ],
+      "portfolios": [
+        {
+          "name": "Rollover IRA",
+          "value": 254747.31,
+          "pnl_amount": 7758.51,
+          "pnl_percent": 3.14,
+          "pnl_direction": "up",
+          "dividends_next_week": 34.19,
+          "top_gainers": [
+            { "ticker": "AVGO", "name": "Broadcom Inc",                           "change_amount": 1573.46, "change_percent": 18.45 },
+            { "ticker": "VRT",  "name": "Vertiv Holdings Co",                     "change_amount":  597.00, "change_percent": 12.45 },
+            { "ticker": "AMZN", "name": "Amazon.com, Inc",                        "change_amount":  250.60, "change_percent":  5.68 },
+            { "ticker": "XLK",  "name": "Technology Select Sector SPDR Fund",     "change_amount": 1042.93, "change_percent":  4.77 },
+            { "ticker": "SCHG", "name": "Schwab U.S. Large-Cap Growth ETF",       "change_amount":  471.90, "change_percent":  4.56 }
+          ],
+          "top_losers": []
+        },
+        {
+          "name": "Roth IRA",
+          "value": 207973.45,
+          "pnl_amount": 7665.60,
+          "pnl_percent": 3.83,
+          "pnl_direction": "up",
+          "dividends_next_week": 107.62,
+          "top_gainers": [
+            { "ticker": "AVGO", "name": "Broadcom Inc",                           "change_amount":  757.58, "change_percent": 18.45 },
+            { "ticker": "MOD",  "name": "Modine Manufacturing Company",           "change_amount": 1431.75, "change_percent": 13.35 },
+            { "ticker": "VRT",  "name": "Vertiv Holdings Co",                     "change_amount":  995.36, "change_percent": 12.45 },
+            { "ticker": "SMH",  "name": "VanEck Vectors Semiconductor ETF",       "change_amount": 1176.75, "change_percent":  8.02 },
+            { "ticker": "AMZN", "name": "Amazon.com, Inc",                        "change_amount":  250.60, "change_percent":  5.68 }
+          ],
+          "top_losers": [
+            { "ticker": "NVDA", "name": "NVIDIA Corporation", "change_amount": -37.61, "change_percent": -1.05 }
+          ]
+        },
+        {
+          "name": "Investment",
+          "value": 161024.28,
+          "pnl_amount": 3210.85,
+          "pnl_percent": 2.03,
+          "pnl_direction": "up",
+          "dividends_next_week": 69.77,
+          "top_gainers": [
+            { "ticker": "MU",    "name": "Micron Technology, Inc",                        "change_amount":  349.32, "change_percent": 14.04 },
+            { "ticker": "VRT",   "name": "Vertiv Holdings Co",                            "change_amount":   99.50, "change_percent": 12.45 },
+            { "ticker": "VTI",   "name": "Vanguard Total Stock Market Index Fund ETF Shares", "change_amount": 1601.28, "change_percent":  3.86 },
+            { "ticker": "FLCSX", "name": "Fidelity Large Cap Stock Fund",                 "change_amount":  322.90, "change_percent":  3.82 },
+            { "ticker": "VXUS",  "name": "Vanguard Total International Stock Index Fund ETF Shares", "change_amount": 379.76, "change_percent": 2.77 }
+          ],
+          "top_losers": []
+        },
+        {
+          "name": "Traditional IRA",
+          "value": 685365.33,
+          "pnl_amount": 2620.77,
+          "pnl_percent": 0.38,
+          "pnl_direction": "up",
+          "dividends_next_week": 148.98,
+          "top_gainers": [
+            { "ticker": "VRT",  "name": "Vertiv Holdings Co",                     "change_amount":  258.70, "change_percent": 12.45 },
+            { "ticker": "GLDM", "name": "SPDR Gold MiniShares",                   "change_amount": 1087.03, "change_percent":  3.64 },
+            { "ticker": "SCHD", "name": "Schwab U.S. Dividend Equity ETF",        "change_amount":  543.90, "change_percent":  1.81 },
+            { "ticker": "USMV", "name": "iShares MSCI USA Min Vol Factor ETF",    "change_amount":  347.19, "change_percent":  1.74 },
+            { "ticker": "VGSH", "name": "Vanguard Short-Term Treasury Index Fund ETF Shares", "change_amount": 59.50, "change_percent": 0.08 }
+          ],
+          "top_losers": []
+        }
+      ],
+      "upcoming_dividends": [
+        { "date": "2025-12-01", "display_date": "Dec 01", "ticker": "BNDW", "name": "Vanguard Total World Bond ETF",                               "event_type": "Ex-dividend date", "frequency": "monthly",    "amount_per_share": 0.1867  },
+        { "date": "2025-12-01", "display_date": "Dec 01", "ticker": "VGSH", "name": "Vanguard Short-Term Treasury Index Fund ETF Shares",          "event_type": "Ex-dividend date", "frequency": "monthly",    "amount_per_share": 0.1854  },
+        { "date": "2025-12-01", "display_date": "Dec 01", "ticker": "SGOV", "name": "iShares Trust - iShares 0-3 Month Treasury Bond ETF",         "event_type": "Ex-dividend date", "frequency": "monthly",    "amount_per_share": 0.31291 },
+        { "date": "2025-12-01", "display_date": "Dec 01", "ticker": "FBND", "name": "Fidelity Total Bond ETF",                                     "event_type": "Payment date",     "frequency": "monthly",    "amount_per_share": 0.17    },
+        { "date": "2025-12-03", "display_date": "Dec 03", "ticker": "BNDW", "name": "Vanguard Total World Bond ETF",                               "event_type": "Payment date",     "frequency": "monthly",    "amount_per_share": 0.1867  },
+        { "date": "2025-12-03", "display_date": "Dec 03", "ticker": "VGSH", "name": "Vanguard Short-Term Treasury Index Fund ETF Shares",          "event_type": "Payment date",     "frequency": "monthly",    "amount_per_share": 0.1854  },
+        { "date": "2025-12-04", "display_date": "Dec 04", "ticker": "NVDA", "name": "NVIDIA Corporation",                                          "event_type": "Ex-dividend date", "frequency": "quarterly",  "amount_per_share": 0.01    },
+        { "date": "2025-12-04", "display_date": "Dec 04", "ticker": "SGOV", "name": "iShares Trust - iShares 0-3 Month Treasury Bond ETF",         "event_type": "Payment date",     "frequency": "monthly",    "amount_per_share": 0.31291 }
+      ]
+    },
+    {
       "id": "2025-10-25",
       "week_ending": "October 25, 2025",
       "created_at": "2025-10-25",
