@@ -166,6 +166,9 @@ function renderMarkets(markets) {
 
 // ── Render: Summary Bar ──────────────────────
 
+const BASELINE_DATE        = 'Nov 29, 2025';
+const BASELINE_TOTAL_VALUE = 1309110.37;
+
 function renderSummary(portfolios) {
   const totalValue   = portfolios.reduce((s, p) => s + p.value, 0);
   const totalPnl     = portfolios.reduce((s, p) => s + p.pnl_amount, 0);
@@ -173,10 +176,16 @@ function renderSummary(portfolios) {
   const pnlCls       = totalPnl >= 0 ? 'green' : 'red';
   const pnlSign      = totalPnl >= 0 ? '▲' : '▼';
 
+  const sinceGainLoss    = totalValue - BASELINE_TOTAL_VALUE;
+  const sinceGainLossCls = sinceGainLoss >= 0 ? 'green' : 'red';
+  const sinceArrow       = sinceGainLoss >= 0 ? '▲' : '▼';
+  const sincePct         = (sinceGainLoss / BASELINE_TOTAL_VALUE) * 100;
+
   const cards = [
     { label: 'Total Portfolio Value', value: fmt.currency(totalValue), sub: `${portfolios.length} accounts`, subCls: '' },
     { label: 'Weekly P&L', value: `${fmt.sign(totalPnl)}${fmt.currency(Math.abs(totalPnl))}`, sub: `${pnlSign} overall gain`, subCls: pnlCls },
     { label: 'Dividends Next Week', value: fmt.currency(totalDiv), sub: 'across all accounts', subCls: 'green' },
+    { label: 'Total Gain/Loss', value: `${sinceGainLoss >= 0 ? '+' : '-'}${fmt.currency(Math.abs(sinceGainLoss))}`, sub: `${sinceArrow}${Math.abs(sincePct).toFixed(2)}% since ${BASELINE_DATE}`, subCls: sinceGainLossCls },
   ];
 
   return cards.map(c =>
