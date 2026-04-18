@@ -1,6 +1,110 @@
 {
   "reports": [
     {
+      "id": "2026-04-18",
+      "week_ending": "April 18, 2026",
+      "created_at": "2026-04-18",
+      "markets": [
+        { "name": "S&P 500",                      "ticker": "SPX",  "change": 4.54, "direction": "up" },
+        { "name": "NASDAQ Composite",             "ticker": "COMP", "change": 6.84, "direction": "up" },
+        { "name": "Dow Jones Industrial Average", "ticker": "DJIA", "change": 3.19, "direction": "up" },
+        { "name": "Bitcoin",                      "ticker": "BTC",  "change": 7.29, "direction": "up" }
+      ],
+      "portfolios": [
+        {
+          "name": "Rollover IRA",
+          "value": 237739.48,
+          "pnl_amount": 6272.70,
+          "pnl_percent": 2.71,
+          "pnl_direction": "up",
+          "dividends_next_week": 0,
+          "top_gainers": [
+            { "ticker": "XLK",  "name": "Technology Select Sector SPDR Fund",                          "change_amount": 1837.36, "change_percent": 8.22 },
+            { "ticker": "VTI",  "name": "Vanguard Total Stock Market Index Fund ETF Shares",            "change_amount": 3120.44, "change_percent": 4.62 },
+            { "ticker": "VXUS", "name": "Vanguard Total International Stock Index Fund ETF Shares",     "change_amount":  627.44, "change_percent": 3.05 },
+            { "ticker": "SCHD", "name": "Schwab U.S. Dividend Equity ETF",                             "change_amount":  429.24, "change_percent": 1.60 },
+            { "ticker": "XLV",  "name": "Health Care Select Sector SPDR Fund",                         "change_amount":  192.21, "change_percent": 1.01 }
+          ],
+          "top_losers": [
+            { "ticker": "PDBC", "name": "Invesco Optimum Yield Diversified Commodity Strategy No K-1 ETF", "change_amount": -145.34, "change_percent": -0.77 }
+          ]
+        },
+        {
+          "name": "Roth IRA",
+          "value": 226403.60,
+          "pnl_amount": 7564.37,
+          "pnl_percent": 3.46,
+          "pnl_direction": "up",
+          "dividends_next_week": 0,
+          "top_gainers": [
+            { "ticker": "SMH",   "name": "VanEck Vectors Semiconductor ETF",                             "change_amount": 1449.58, "change_percent": 6.24 },
+            { "ticker": "FZROX", "name": "Fidelity ZERO Total Market Index Fund",                        "change_amount": 4097.94, "change_percent": 4.64 },
+            { "ticker": "VRT",   "name": "Vertiv Holdings Co",                                           "change_amount":  330.76, "change_percent": 4.14 },
+            { "ticker": "VXUS",  "name": "Vanguard Total International Stock Index Fund ETF Shares",     "change_amount":  781.20, "change_percent": 3.05 },
+            { "ticker": "GLDM",  "name": "SPDR Gold MiniShares",                                         "change_amount":  164.70, "change_percent": 1.94 }
+          ],
+          "top_losers": []
+        },
+        {
+          "name": "Investment",
+          "value": 148645.01,
+          "pnl_amount": 2742.77,
+          "pnl_percent": 1.88,
+          "pnl_direction": "up",
+          "dividends_next_week": 0,
+          "top_gainers": [
+            { "ticker": "VTI",  "name": "Vanguard Total Stock Market Index Fund ETF Shares",            "change_amount": 1981.44, "change_percent": 4.62 },
+            { "ticker": "VXUS", "name": "Vanguard Total International Stock Index Fund ETF Shares",     "change_amount":  466.24, "change_percent": 3.05 },
+            { "ticker": "SCHD", "name": "Schwab U.S. Dividend Equity ETF",                             "change_amount":  253.33, "change_percent": 1.60 },
+            { "ticker": "SGOV", "name": "iShares Trust - iShares 0-3 Month Treasury Bond ETF",         "change_amount":   41.76, "change_percent": 0.06 }
+          ],
+          "top_losers": []
+        },
+        {
+          "name": "Traditional IRA",
+          "value": 683543.15,
+          "pnl_amount": 5418.90,
+          "pnl_percent": 0.80,
+          "pnl_direction": "up",
+          "dividends_next_week": 0,
+          "top_gainers": [
+            { "ticker": "USMV", "name": "iShares MSCI USA Min Vol Factor ETF",                                        "change_amount": 1369.39, "change_percent": 2.27 },
+            { "ticker": "GLDM", "name": "SPDR Gold MiniShares",                                                        "change_amount": 1692.75, "change_percent": 1.94 },
+            { "ticker": "SCHD", "name": "Schwab U.S. Dividend Equity ETF",                                            "change_amount": 1484.70, "change_percent": 1.60 },
+            { "ticker": "VGSH", "name": "Vanguard Short-Term Treasury Index Fund ETF Shares",                         "change_amount":  597.76, "change_percent": 0.27 },
+            { "ticker": "VTIP", "name": "Vanguard Short-Term Inflation-Protected Securities Index Fund ETF Shares",   "change_amount":  208.78, "change_percent": 0.22 }
+          ],
+          "top_losers": []
+        },
+        {
+          "name": "Income Strategy Test",
+          "value": 15215.94,
+          "pnl_amount": 75.36,
+          "pnl_percent": 0.50,
+          "pnl_direction": "up",
+          "dividends_next_week": 0,
+          "top_gainers": [
+            { "ticker": "SCHD", "name": "Schwab U.S. Dividend Equity ETF",                             "change_amount": 49.20, "change_percent": 1.60 },
+            { "ticker": "JEPI", "name": "JPMorgan Equity Premium Income ETF",                          "change_amount": 22.04, "change_percent": 0.43 },
+            { "ticker": "SGOV", "name": "iShares Trust - iShares 0-3 Month Treasury Bond ETF",        "change_amount":  4.12, "change_percent": 0.06 }
+          ],
+          "top_losers": []
+        }
+      ],
+      "events": [
+        {
+          "date": "2026-04-14",
+          "display_date": "Apr 14",
+          "ticker": "VRT",
+          "name": "Vertiv Holdings Co",
+          "change_percent": 3.52,
+          "direction": "up",
+          "reason": "Vertiv Holdings shares are trading higher after Goldman Sachs maintained its Buy rating and raised its price target on the stock from $277 to $311. Also, BNP Paribas initiated its coverage on the stock with an Outperform rating and announced a price target of $345."
+        }
+      ],
+      "upcoming_dividends": []
+    },
+    {
       "id": "2026-03-14",
       "week_ending": "March 14, 2026",
       "created_at": "2026-03-14",
