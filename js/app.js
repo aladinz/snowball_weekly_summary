@@ -291,6 +291,39 @@ function renderCalendar(divs) {
   </table>`;
 }
 
+// ── Render: Weekly Events ───────────────────
+
+function renderEvents(events) {
+  if (!events || !events.length) {
+    return '<div class="events-empty">No notable events for this week.</div>';
+  }
+
+  const rows = events.map(e => {
+    const isWhy = (e.event_type || '').toLowerCase().includes('why is it moving');
+    const amount = (typeof e.amount_per_share === 'number' && e.amount_per_share > 0)
+      ? `${fmt.currency(e.amount_per_share)}<span class="muted">/share</span>`
+      : '<span class="muted">-</span>';
+
+    return `<tr>
+      <td class="evt-date">${e.display_date || ''}</td>
+      <td class="evt-holding">
+        <div class="evt-ticker">${e.ticker || ''}</div>
+        <div class="evt-name">${e.name || ''}</div>
+      </td>
+      <td><span class="evt-type ${isWhy ? 'news' : 'dividend'}">${e.event_type || ''}</span></td>
+      <td class="evt-amount">${amount}</td>
+      <td class="evt-details">${e.details || '<span class="muted">-</span>'}</td>
+    </tr>`;
+  }).join('');
+
+  return `<table class="events-table">
+    <thead><tr>
+      <th>Date</th><th>Holding</th><th>Event</th><th style="text-align:right">Amount</th><th>Details</th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
+
 // ── Render: History ──────────────────────────
 
 function renderHistory(reports, activeId) {
@@ -345,6 +378,9 @@ class App {
 
     // Summary
     document.getElementById('summary-bar').innerHTML = renderSummary(report.portfolios);
+
+    // Events
+    document.getElementById('events-body').innerHTML = renderEvents(report.events || []);
 
     // Charts
     buildDonut(report.portfolios, 'donut-chart');

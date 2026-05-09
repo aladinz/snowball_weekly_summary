@@ -1,6 +1,132 @@
 {
   "reports": [
     {
+      "id": "2026-05-09",
+      "week_ending": "May 9, 2026",
+      "created_at": "2026-05-09",
+      "markets": [
+        { "name": "S&P 500",                      "ticker": "SPX",  "change": 2.33, "direction": "up" },
+        { "name": "NASDAQ Composite",             "ticker": "COMP", "change": 4.51, "direction": "up" },
+        { "name": "Dow Jones Industrial Average", "ticker": "DJIA", "change": 0.22, "direction": "up" },
+        { "name": "Bitcoin",                      "ticker": "BTC",  "change": 2.23, "direction": "up" }
+      ],
+      "portfolios": [
+        {
+          "name": "Rollover IRA",
+          "value": 375882.19,
+          "pnl_amount": 3085.60,
+          "pnl_percent": 0.83,
+          "pnl_direction": "up",
+          "dividends_received": 69.80,
+          "dividends_next_week": 69.80,
+          "top_gainers": [
+            { "ticker": "VXUS", "name": "Vanguard Total International Stock Index Fund ETF Shares", "change_amount": 1365.30, "change_percent": 2.96 },
+            { "ticker": "VTI",  "name": "Vanguard Total Stock Market Index Fund ETF Shares", "change_amount": 1527.97, "change_percent": 2.13 },
+            { "ticker": "BNDW", "name": "Vanguard Total World Bond ETF", "change_amount": 145.53, "change_percent": 0.31 }
+          ],
+          "top_losers": [
+            { "ticker": "XLV", "name": "Health Care Select Sector SPDR Fund", "change_amount": -410.93, "change_percent": -1.16 }
+          ]
+        },
+        {
+          "name": "Roth IRA",
+          "value": 235853.67,
+          "pnl_amount": 5947.79,
+          "pnl_percent": 2.59,
+          "pnl_direction": "up",
+          "dividends_received": 47.17,
+          "dividends_next_week": 47.17,
+          "top_gainers": [
+            { "ticker": "SMH",   "name": "VanEck Vectors Semiconductor ETF", "change_amount": 3013.93, "change_percent": 11.13 },
+            { "ticker": "VRT",   "name": "Vertiv Holdings Co", "change_amount": 315.34, "change_percent": 3.55 },
+            { "ticker": "VXUS",  "name": "Vanguard Total International Stock Index Fund ETF Shares", "change_amount": 774.90, "change_percent": 2.96 },
+            { "ticker": "GLDM",  "name": "SPDR Gold MiniShares", "change_amount": 205.20, "change_percent": 2.50 },
+            { "ticker": "FZROX", "name": "Fidelity ZERO Total Market Index Fund", "change_amount": 2048.97, "change_percent": 2.19 }
+          ],
+          "top_losers": [
+            { "ticker": "XLV",  "name": "Health Care Select Sector SPDR Fund", "change_amount": -277.22, "change_percent": -1.15 },
+            { "ticker": "SCHD", "name": "Schwab U.S. Dividend Equity ETF", "change_amount": -200.67, "change_percent": -0.75 }
+          ]
+        },
+        {
+          "name": "Investment",
+          "value": 150991.99,
+          "pnl_amount": 1564.71,
+          "pnl_percent": 1.05,
+          "pnl_direction": "up",
+          "dividends_received": 207.35,
+          "dividends_next_week": 207.35,
+          "top_gainers": [
+            { "ticker": "VXUS", "name": "Vanguard Total International Stock Index Fund ETF Shares", "change_amount": 462.48, "change_percent": 2.96 },
+            { "ticker": "VTI",  "name": "Vanguard Total Stock Market Index Fund ETF Shares", "change_amount": 970.24, "change_percent": 2.13 },
+            { "ticker": "SGOV", "name": "iShares Trust - iShares 0-3 Month Treasury Bond ETF", "change_amount": 48.72, "change_percent": 0.07 }
+          ],
+          "top_losers": [
+            { "ticker": "SCHD", "name": "Schwab U.S. Dividend Equity ETF", "change_amount": -124.08, "change_percent": -0.75 }
+          ]
+        },
+        {
+          "name": "Traditional IRA",
+          "value": 682878.57,
+          "pnl_amount": 2150.10,
+          "pnl_percent": 0.32,
+          "pnl_direction": "up",
+          "dividends_received": 993.68,
+          "dividends_next_week": 993.68,
+          "top_gainers": [
+            { "ticker": "GLDM", "name": "SPDR Gold MiniShares", "change_amount": 2109.00, "change_percent": 2.50 },
+            { "ticker": "SGOV", "name": "iShares Trust - iShares 0-3 Month Treasury Bond ETF", "change_amount": 76.43, "change_percent": 0.07 },
+            { "ticker": "VGSH", "name": "Vanguard Short-Term Treasury Index Fund ETF Shares", "change_amount": 112.08, "change_percent": 0.05 }
+          ],
+          "top_losers": [
+            { "ticker": "SCHD", "name": "Schwab U.S. Dividend Equity ETF", "change_amount": -727.20, "change_percent": -0.75 },
+            { "ticker": "USMV", "name": "iShares MSCI USA Min Vol Factor ETF", "change_amount": -356.95, "change_percent": -0.58 },
+            { "ticker": "VTIP", "name": "Vanguard Short-Term Inflation-Protected Securities Index Fund ETF Shares", "change_amount": -56.94, "change_percent": -0.06 }
+          ]
+        },
+        {
+          "name": "Income Strategy Test",
+          "value": 15166.54,
+          "pnl_amount": -35.17,
+          "pnl_percent": -0.23,
+          "pnl_direction": "down",
+          "dividends_received": 59.92,
+          "dividends_next_week": 59.92,
+          "top_gainers": [
+            { "ticker": "SGOV", "name": "iShares Trust - iShares 0-3 Month Treasury Bond ETF", "change_amount": 4.81, "change_percent": 0.07 }
+          ],
+          "top_losers": [
+            { "ticker": "JEPI", "name": "JPMorgan Equity Premium Income ETF", "change_amount": -75.80, "change_percent": -1.51 },
+            { "ticker": "SCHD", "name": "Schwab U.S. Dividend Equity ETF", "change_amount": -24.10, "change_percent": -0.75 }
+          ]
+        }
+      ],
+      "events": [
+        { "date": "2026-05-05", "display_date": "May 05", "ticker": "BNDW", "name": "Vanguard Total World Bond ETF", "event_type": "Paid monthly divs", "frequency": "monthly", "amount_per_share": 0.1939 },
+        { "date": "2026-05-05", "display_date": "May 05", "ticker": "JEPI", "name": "JPMorgan Equity Premium Income ETF", "event_type": "Paid monthly divs", "frequency": "monthly", "amount_per_share": 0.44761 },
+        { "date": "2026-05-05", "display_date": "May 05", "ticker": "VGIT", "name": "Vanguard Intermediate-Term Treasury Index Fund ETF Shares", "event_type": "Paid monthly divs", "frequency": "monthly", "amount_per_share": 0.1872 },
+        { "date": "2026-05-05", "display_date": "May 05", "ticker": "VGSH", "name": "Vanguard Short-Term Treasury Index Fund ETF Shares", "event_type": "Paid monthly divs", "frequency": "monthly", "amount_per_share": 0.179 },
+        { "date": "2026-05-06", "display_date": "May 06", "ticker": "SGOV", "name": "iShares Trust - iShares 0-3 Month Treasury Bond ETF", "event_type": "Paid monthly divs", "frequency": "monthly", "amount_per_share": 0.29792 },
+        {
+          "date": "2026-05-06",
+          "display_date": "May 06",
+          "ticker": "VRT",
+          "name": "Vertiv Holdings Co",
+          "event_type": "Why is it moving",
+          "frequency": "news",
+          "amount_per_share": 0,
+          "details": "Shares of companies in the broader industrial sector are trading higher amid reports of U.S.-Iran talks to end hostilities and restore Strait of Hormuz transport, which is driving expectations for lower energy prices, subdued inflation and higher global demand."
+        }
+      ],
+      "upcoming_dividends": [
+        { "date": "2026-05-05", "display_date": "May 05", "ticker": "BNDW", "name": "Vanguard Total World Bond ETF", "event_type": "Payment date", "frequency": "monthly", "amount_per_share": 0.1939 },
+        { "date": "2026-05-05", "display_date": "May 05", "ticker": "JEPI", "name": "JPMorgan Equity Premium Income ETF", "event_type": "Payment date", "frequency": "monthly", "amount_per_share": 0.44761 },
+        { "date": "2026-05-05", "display_date": "May 05", "ticker": "VGIT", "name": "Vanguard Intermediate-Term Treasury Index Fund ETF Shares", "event_type": "Payment date", "frequency": "monthly", "amount_per_share": 0.1872 },
+        { "date": "2026-05-05", "display_date": "May 05", "ticker": "VGSH", "name": "Vanguard Short-Term Treasury Index Fund ETF Shares", "event_type": "Payment date", "frequency": "monthly", "amount_per_share": 0.179 },
+        { "date": "2026-05-06", "display_date": "May 06", "ticker": "SGOV", "name": "iShares Trust - iShares 0-3 Month Treasury Bond ETF", "event_type": "Payment date", "frequency": "monthly", "amount_per_share": 0.29792 }
+      ]
+    },
+    {
       "id": "2026-04-18",
       "week_ending": "April 18, 2026",
       "created_at": "2026-04-18",
@@ -864,7 +990,7 @@
           "date": "2026-04-01",
           "display_date": "Apr 01",
           "ticker": "SPAXX",
-          "name": "Fidelity┬« Government Money Market Fund",
+          "name": "FidelityΓö¼┬½ Government Money Market Fund",
           "event_type": "Declared monthly div",
           "frequency": "monthly",
           "amount_per_share": 0.0028
@@ -873,7 +999,7 @@
           "date": "2026-04-01",
           "display_date": "Apr 01",
           "ticker": "SPAXX",
-          "name": "Fidelity┬« Government Money Market Fund",
+          "name": "FidelityΓö¼┬½ Government Money Market Fund",
           "event_type": "Paid monthly divs",
           "frequency": "monthly",
           "amount_per_share": 0.0028

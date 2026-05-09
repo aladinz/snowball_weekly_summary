@@ -308,6 +308,91 @@ a:hover { text-decoration: underline; }
 .summary-sub.green { color: var(--green); }
 .summary-sub.red   { color: var(--red); }
 
+/* ── Weekly Events ── */
+.events-panel {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  margin-bottom: 32px;
+  overflow: hidden;
+}
+
+.events-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.events-table thead {
+  background: rgba(56, 139, 253, 0.08);
+}
+
+.events-table th,
+.events-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.events-table th {
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.6px;
+  text-align: left;
+}
+
+.evt-date,
+.evt-amount {
+  white-space: nowrap;
+}
+
+.evt-amount {
+  text-align: right;
+}
+
+.evt-ticker {
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 2px;
+}
+
+.evt-name {
+  color: var(--text-secondary);
+}
+
+.evt-type {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+
+.evt-type.dividend {
+  color: var(--green-light);
+  background: var(--green-bg);
+  border-color: rgba(63, 185, 80, 0.35);
+}
+
+.evt-type.news {
+  color: var(--gold-light);
+  background: var(--gold-bg);
+  border-color: rgba(240, 192, 64, 0.35);
+}
+
+.evt-details {
+  color: var(--text-secondary);
+  max-width: 540px;
+}
+
+.events-empty {
+  padding: 16px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
 /* ── Portfolio Cards ── */
 .portfolios-grid {
   display: grid;
@@ -898,6 +983,8 @@ a:hover { text-decoration: underline; }
   .site-header { flex-direction: column; align-items: flex-start; }
   .history-item { flex-wrap: wrap; }
   .history-portfolios { display: none; }
+  .events-panel { overflow-x: auto; }
+  .events-table { min-width: 760px; }
 }
 
 /* ── Utility ── */
